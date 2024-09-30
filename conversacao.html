@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversação com Gemini</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Conversação com Gemini</h1>
+    <input id="userId" type="text" placeholder="User ID" required>
+    <textarea id="message" placeholder="Mensagem" required></textarea>
+    <button onclick="sendMessage()">Enviar Mensagem</button>
+    <div id="response"></div>
+
+    <script>
+        async function sendMessage() {
+            const userId = document.getElementById('userId').value;
+            const message = document.getElementById('message').value;
+
+            // Aqui você pode adicionar a lógica para enviar a mensagem para o modelo Gemini
+            try {
+                const response = await axios.post('http://localhost:5000/api/conversations', {
+                    userId,
+                    message
+                });
+                document.getElementById('response').innerText = 'Resposta: ' + response.data.message; // Ajuste conforme necessário
+            } catch (error) {
+                document.getElementById('response').innerText = 'Erro: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

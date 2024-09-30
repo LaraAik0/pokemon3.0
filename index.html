@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Login</h1>
+    <input id="username" type="text" placeholder="Nome de Usuário" required>
+    <br>
+    <input id="password" type="password" placeholder="Senha" required>
+    <br>
+    <button onclick="registerUser()">Registrar</button>
+    <br>
+    <div id="response"></div>
+
+    <script>
+        async function registerUser() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await axios.post('http://localhost:5000/api/register', {
+                    username,
+                    password
+                });
+                
+                document.getElementById('response').innerText = response.data.message;
+
+                // Redireciona para a página de conversação com Gemini após registro bem-sucedido
+                if (response.status === 201) {
+                    window.location.href = 'conversacao.html'; // Substitua pelo nome correto do arquivo da página de conversa
+                }
+
+            } catch (error) {
+                document.getElementById('response').innerText = 'Erro: ' + error.response.data.message;
+            }
+        }
+    </script>
+</body>
+</html>
